@@ -1,82 +1,48 @@
 #include <iostream>
-#include <map>
-#include <string>
-
+#include <cmath>
 using namespace std;
 
-// 연산
-void case1(int w0, int i0, int t, int d, int i, int a) {
-  int w;
-  int w_change = 0;
-  int b = i0;
-  string is_YOYO = "";
+// 다이어트 후 체중과 일일 기초 대사량을 계산하는 함수
+void cal(int w, int basic, int t, int day, int d_input, int d_output) {
+    int w1 = w;
+    int w2 = w;
+    int basic2 = basic;
 
-  while (d--) {
-    w_change = i - (b + a);
-    w += w_change;
-  }
+    for (int i = 0; i < day; i++) {
+        w1 += d_input - (basic + d_output);
+        w2 += d_input - (basic2 + d_output);
 
-    // 데시가 죽는 경우
-    // 체중이 0 이하
-    if (w <= 0) {
-      cout << "Danger Diet";
-      return;
+        if (abs(d_input - (basic2 + d_output)) > t)
+            basic2 += floor((d_input - (basic2 + d_output)) / 2.0);
     }
-  cout << w << b << '\n';
+
+    // 출력 01. 일일 기초대사량의 변화 반영 X
+    if (w1 <= 0)
+        cout << "Danger Diet\n";
+    else
+        cout << w1 << " " << basic << "\n";
+
+    // 출력 02. 일일 기초대사량의 변화 반영 O
+    if (w2 <= 0 || basic2 <= 0)
+        cout << "Danger Diet\n";
+    else {
+        cout << w2 << " " << basic2 << " ";
+        if (basic - basic2 > 0)
+            cout << "YOYO";
+        else
+            cout << "NO";
+    }
 }
 
-void case2(int w0, int i0, int t, int d, int i, int a) {
-  int w;
-  int w_change = 0;
-  int b = i0;
-  string is_YOYO = "";
+int main() {
+    int w, basic, t, day, d_input, d_output;
 
-  while (d--) {
-    w_change = i - (b + a);
-    w += w_change;
-    if (w_change > t)
-    {
-      b += (w_change / 2);
-    }
+    // 입력
+    cin >> w >> basic >> t;
+    cin >> day >> d_input >> d_output;
 
-    // 데시가 죽는 경우
-    // 체중이 0 이하
-    if (w <= 0) {
-      cout << "Danger Diet" << '\n';
-      return;
-    }
-    // 기초대사량이 0 이하
-    if (b <= 0) {
-      cout << "Dagner Diet" << '\n';
-    }
-  }
+    // 함수 호출
+    cal(w, basic, t, day, d_input, d_output);
 
-  if ((i0 - (b + a)) > 0) {
-    is_YOYO = "YOYO";
-  }
-  else {
-    is_YOYO = "NO";
-  }
-
-  cout << w << b << is_YOYO << '\n';
-}
-
-int main () {
-  // 입출력 속도 향상
-  ios_base::sync_with_stdio(false);
-  cin.tie(NULL);
-
-  int w0, i0, t;
-  int d, i, a;
-  int w;
-  int w_change = 0;
-  int b = i0;
-  string is_YOYO = "";
-
-  // 입력
-  cin >> w0 >> i0 >> t >> d >> i >> a;
-
-  // 출력
-  case1(w0, i0, t, d, i, a);
-  case2(w0, i0, t, d, i, a);
+    return 0;
 }
