@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/sunny-macbook-air/yunsun/dev/Altu-Bitu-JungYunsun/01_정렬_맵_셋",
+      "program": "/Users/sunny-macbook-air/yunsun/dev/Altu-Bitu-JungYunsun/01_정렬_맵_셋/build/Debug/outDebug"
+    }
+  ]
+}
