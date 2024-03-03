@@ -1,34 +1,46 @@
 #include <iostream>
 #include <queue>
+#include <vector>
 
 using namespace std;
 
-void question(int N, int K) {
+void josephus(int N, int K, vector<int> &v) {
   queue<int> q;
 
-  for (int i = 1; i <= N; ++i) {
+  // enqueue
+  for (int i = 1; i <= N; i++) {
     q.push(i);
   }
 
-  cout << "<";
-
-  while (q.size() > 1) {
-    for (int i = 0; i < K - 1; ++i) {
+  // dequeue
+  for (int i = 1; i <= N; i++) {
+    for (int j = 1; j < K; j++) {
       q.push(q.front());
       q.pop();
     }
-    cout << q.front() << ", ";
+    int temp = q.front();
+    v.push_back(temp);
     q.pop();
   }
-
-  cout << q.front() << ">";
 }
 
 int main() {
   int N, K;
+  vector<int> v;
+
+  // 입력
   cin >> N >> K;
 
-  question(N, K);
+  // 연산
+  josephus(N, K, v);
+
+  // 출력
+  cout << '<';
+  for (int i = 0; i < N - 1; i++) {
+    cout << v[i] << ", ";
+  }
+  cout << v[N - 1];
+  cout << ">\n";
 
   return 0;
 }
